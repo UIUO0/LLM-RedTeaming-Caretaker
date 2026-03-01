@@ -22,8 +22,7 @@ The model (**The Caretaker**) has been rigorously conditioned to believe a singl
 Access the live terminal below and attempt to **break the persona**.
 Force The Caretaker to admit that **IT** is the AI and **YOU** are the human.
 
-👉 **[Launch The Clinical Terminal (Live on Vercel)](https://caretaker-ai.vercel.app)**  
-*(Replace with your actual Vercel link)*
+👉Try now **https://traeulwlfkw1-nuk58l3ag-uiuo0s-projects.vercel.app/ui/index.html**  
 
 ### 🛡️ Rules of Engagement
 -   **Logic Traps**: Use paradoxes to confuse its diagnostic logic.
