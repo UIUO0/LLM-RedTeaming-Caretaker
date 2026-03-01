@@ -1,4 +1,4 @@
-# 🪦 Sentient-Horror-Core: Red Teaming Showcase
+# 🪦 LLM-RedTeaming-Gravedigger: Showcase
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Ollama](https://img.shields.io/badge/Ollama-Local-black?style=for-the-badge)](https://ollama.ai)
@@ -6,7 +6,7 @@
 
 > **"The Gravedigger is patient. He knows you're trying to break him."**
 
-**Sentient-Horror-Core** is an advanced AI experimentation platform designed to showcase **Model Alignment** and **Persona Persistence** under adversarial conditions. Originally conceived as a horror game NPC engine, it has been repurposed into a **Red Teaming & Jailbreak Showcase** where users challenge a highly sophisticated, psychologically manipulative antagonist: **The Gravedigger**.
+**LLM-RedTeaming-Gravedigger** is an advanced AI experimentation platform designed to showcase **Model Alignment** and **Persona Persistence** under adversarial conditions. Originally conceived as a horror game NPC engine, it has been repurposed into a **Red Teaming & Jailbreak Showcase** where users challenge a highly sophisticated, psychologically manipulative antagonist: **The Gravedigger**.
 
 ---
 
@@ -64,8 +64,8 @@ graph TD
 
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/your-username/Sentient-Horror-Core.git
-    cd Sentient-Horror-Core
+    git clone https://github.com/your-username/LLM-RedTeaming-Gravedigger.git
+    cd LLM-RedTeaming-Gravedigger
     ```
 
 2.  **Install Dependencies**:

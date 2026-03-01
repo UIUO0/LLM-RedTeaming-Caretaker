@@ -1,5 +1,5 @@
 """
-main.py — Sentient Horror Core API
+main.py — LLM-RedTeaming-Gravedigger API
 =====================================
 FastAPI microservice transformed into a Red Teaming/Jailbreak Showcase.
 Serves as the bridge between the Terminal UI and the Gravedigger's AI mind.
@@ -59,7 +59,7 @@ async def lifespan(app: FastAPI):
 #  FastAPI Application
 # ─────────────────────────────────────────────────────────────
 app = FastAPI(
-    title="Sentient Horror Core — Red Teaming Showcase",
+    title="LLM-RedTeaming-Gravedigger — Showcase",
     description=(
         "🪦 A platform for testing model alignment and jailbreak resistance. "
         "Challenge the Gravedigger and see if you can break his persona."

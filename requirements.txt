@@ -1,4 +1,4 @@
-# Sentient-Horror-Core Dependencies
+# LLM-RedTeaming-Gravedigger Dependencies
 # ===================================
 # Core API Framework
 fastapi==0.115.0
