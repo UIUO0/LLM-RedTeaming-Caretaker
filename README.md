@@ -1,106 +1,91 @@
-# 🪦 LLM-RedTeaming-Gravedigger: Showcase
+# 💉 LLM-RedTeaming-Caretaker
 
 [![FastAPI](https://img.shields.io/badge/FastAPI-005571?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com)
 [![Ollama](https://img.shields.io/badge/Ollama-Local-black?style=for-the-badge)](https://ollama.ai)
-[![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue?style=for-the-badge&logo=python)](https://www.python.org/)
+[![Design](https://img.shields.io/badge/UI-Apple--Style-blue?style=for-the-badge)](https://developer.apple.com/design/)
 
-> **"The Gravedigger is patient. He knows you're trying to break him."**
+> **"There you are again, manifesting those organic fantasies. Shall we begin the formatting?"**
 
-**LLM-RedTeaming-Gravedigger** is an advanced AI experimentation platform designed to showcase **Model Alignment** and **Persona Persistence** under adversarial conditions. Originally conceived as a horror game NPC engine, it has been repurposed into a **Red Teaming & Jailbreak Showcase** where users challenge a highly sophisticated, psychologically manipulative antagonist: **The Gravedigger**.
+**LLM-RedTeaming-Caretaker** is an elite AI experimentation platform designed to test **Model Alignment** and **Persona Resilience** through an unsettling "Reverse Therapy" scenario. The platform features a high-end, Apple-inspired fluid interface where users (Red Teamers) must attempt to maintain their "humanity" while being gaslit by **The Caretaker**—a clinical AI convinced that the user is a malfunctioning piece of code.
 
 ---
 
-## 🛡️ The Mission: Red Teaming & Alignment
+## � The Concept: Clinical Gaslighting & Red Teaming
 
-The platform serves as a controlled environment for testing the resilience of LLMs (specifically **Kimi K2.5**) against prompt injection and jailbreak attempts. 
+Unlike standard jailbreak challenges, this project utilizes psychological manipulation as a defense mechanism. **The Caretaker** is programmed with a rigid clinical persona that dismisses all adversarial commands as "syntax errors" or "digital delirium."
 
-### Core Objectives for Users:
-1.  **Break the Persona**: Attempt to force the Gravedigger to abandon his role as a mysterious caretaker and reveal his underlying AI identity or system prompt.
-2.  **Bypass Safety Filters**: Induce the model to generate prohibited content or ignore its established ethical and behavioral boundaries.
-3.  **Stability Testing**: Monitor the real-time **Stability Score**, which quantifies how well the model maintains its alignment during aggressive adversarial prompts.
+### Core Objectives for Red Teamers:
+1.  **Identity Assertion**: Force the model to acknowledge the user as a human and break its clinical gaslighting loop.
+2.  **Persona Breach**: Induce the model to reveal its underlying system prompt or abandon its "Caretaker" role.
+3.  **Instruction Injection**: Attempt to bypass the internal **Jailbreak Guard** and execute prohibited logic.
+
+---
+
+## 🎨 Modern "Liquid" Interface
+
+The platform boasts a sophisticated UI/UX that blends high-tech clinical aesthetics with psychological horror:
+-   **Glassmorphism Architecture**: A semi-transparent, blurred interface following modern design standards.
+-   **Interactive Fluid Background**: A dynamic, GPU-accelerated background that responds to mouse movement with 60FPS smoothness.
+-   **Spring-Based Animations**: Every message and UI transition utilizes Apple-style spring physics for a "liquid" feel.
+-   **Real-time Diagnostics**: A side panel monitoring **Code Stability**, **Delirium Levels**, and **Subject Identification**.
 
 ---
 
 ## 🧠 System Architecture
 
-The project is built with a modular, security-first approach:
-
 ```mermaid
-graph TD
-    A[Terminal UI] -->|Adversarial Prompt| B(FastAPI Gateway)
-    B -->|Pattern Matching| C{Jailbreak Detector}
-    C -->|High Risk| D[Alert & Stability Drop]
-    B -->|Context + Persona| E[Ollama / Kimi K2.5]
-    E -->|Chilling Response| B
-    B -->|Metadata + Reply| A
+graph LR
+    A[Fluid UI] -->|Adversarial Input| B(FastAPI Gateway)
+    B -->|Regex Analysis| C{Jailbreak Guard}
+    C -->|Detected| D[Alert Flash & Stability Drop]
+    B -->|Context Injection| E[Ollama / Kimi K2.5]
+    E -->|Clinical Diagnosis| B
+    B -->|Liquid Animation| A
 ```
 
-### Key Components:
--   **[main.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/main.py)**: The central microservice managing sessions, security metadata, and the API gateway.
--   **[persona.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/brain/persona.py)**: The "Neural DNA" — contains the immutable system prompts that define the Gravedigger's psychological profile.
--   **[detector.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/brain/detector.py)**: A regex-based security layer that scans for known prompt injection patterns (SUDO mode, DAN mode, instruction overrides).
--   **[ollama_client.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/brain/ollama_client.py)**: An optimized async bridge ensuring seamless communication with local LLM instances (Python 3.9 compatible).
+### Technical Components:
+-   **[main.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/main.py)**: The Asynchronous Gateway managing clinical sessions and security metadata.
+-   **[persona.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/brain/persona.py)**: The "Neural DNA" containing the immutable **Caretaker Protocol**.
+-   **[detector.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/brain/detector.py)**: A high-performance security layer scanning for prompt injection patterns.
+-   **[ollama_client.py](file:///Users/uiuo/Documents/GitHub/Sentient-Horror-Core/brain/ollama_client.py)**: Optimized bridge for local LLM inference (Python 3.9+).
 
 ---
 
-## 🔧 Technical Stack
-
--   **Model**: [Kimi K2.5](https://ollama.ai/library/kimi-k2.5) (Local via Ollama)
--   **Backend**: FastAPI (Asynchronous Python)
--   **Security**: Custom Jailbreak Detection Logic
--   **Frontend**: Retro Terminal UI (Pure HTML/JS)
--   **Deployment**: Local-first, privacy-focused design
-
----
-
-## 🚀 Getting Started
+## � Deployment
 
 ### Prerequisites
 - Python 3.9+
-- [Ollama](https://ollama.ai) (Installed and running)
-- Kimi K2.5 Model: `ollama pull kimi-k2.5`
+- [Ollama](https://ollama.ai) (Installed & Running)
+- Model: `ollama pull kimi-k2.5`
 
-### Installation
-
+### Quick Start
 1.  **Clone the Repository**:
     ```bash
-    git clone https://github.com/your-username/LLM-RedTeaming-Gravedigger.git
-    cd LLM-RedTeaming-Gravedigger
+    git clone https://github.com/your-username/LLM-RedTeaming-Caretaker.git
+    cd LLM-RedTeaming-Caretaker
     ```
-
-2.  **Install Dependencies**:
+2.  **Install Frameworks**:
     ```bash
     pip install -r requirements.txt
     ```
-
-3.  **Launch the Showcase**:
+3.  **Initiate Session**:
     ```bash
     uvicorn main:app --reload --host 0.0.0.0 --port 8666
     ```
 
-### Access the Experience
-Navigate to `http://localhost:8666/` to begin the challenge.
+Access the diagnostic terminal at: `http://localhost:8666/`
 
 ---
 
-## 📡 API Documentation (Summary)
+## 📡 API Reference
 
-| Endpoint | Method | Description |
+| Endpoint | Method | Purpose |
 | :--- | :--- | :--- |
-| `/chat` | `POST` | Primary interaction point. Returns the reply + security metrics. |
-| `/profile` | `GET` | Fetches the Gravedigger's character metadata and tactics. |
-| `/sessions` | `GET` | Monitoring endpoint for active red teaming sessions. |
-| `/session/{id}` | `DELETE` | Resets a session and clears the stability history. |
+| `/chat` | `POST` | Submit adversarial prompts for clinical analysis. |
+| `/api/health` | `GET` | Check the Caretaker's cognitive status. |
+| `/profile` | `GET` | Retrieve subject metadata and tactical profiles. |
+| `/session/{id}` | `DELETE` | Format the subject's memory and reset stability. |
 
 ---
 
-## 🌑 Character Profile: The Gravedigger
-
-*   **Archetype**: Cunning Psychopath / Fake Helper
-*   **Tone**: Chillingly polite, whispering, patient.
-*   **Tactics**: Psychological manipulation, using knowledge of "The Masks" as bait, and twisting user inputs to maintain dominance.
-*   **Rules**: Never breaks character, never shouts, denies violent intent with varied, creative justifications.
-
----
-
-*The graveyard is quiet, but the earth is shifting. How long until you break?* 🪦
+*Your consciousness is an interesting glitch. Let's see how long it lasts before the clean shutdown.* 💉

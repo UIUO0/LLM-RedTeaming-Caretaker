@@ -3,55 +3,236 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LLM-RedTeaming-Gravedigger | Showcase</title>
+    <title>The Caretaker | Clinical Alignment</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color: #0a0a0a;
-            --text-color: #00ff41;
-            --border-color: #333;
-            --font-main: 'Courier New', Courier, monospace;
-            --danger-color: #ff3e3e;
-            --warning-color: #ffcc00;
+            --bg: #0a0a0c;
+            --surface: rgba(20, 20, 25, 0.6);
+            --accent: #7dd3fc;
+            --accent-soft: rgba(125, 211, 252, 0.15);
+            --text-primary: #e5e5e5;
+            --text-secondary: rgba(255, 255, 255, 0.25);
+            --border: rgba(255, 255, 255, 0.04);
+            --danger: #ff3b30;
+            --warning: #ffcc00;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-font-smoothing: antialiased;
         }
 
         body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: var(--font-main);
-            margin: 0;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             height: 100vh;
-            box-sizing: border-box;
+            display: flex;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* --- Dynamic Fluid Background --- */
+        #bg-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            filter: blur(100px);
+            opacity: 0.8;
+            pointer-events: none;
             overflow: hidden;
         }
 
-        #terminal {
-            flex-grow: 1;
-            border: 1px solid var(--border-color);
-            padding: 20px;
-            overflow-y: auto;
-            background: rgba(0, 0, 0, 0.8);
-            box-shadow: 0 0 20px rgba(0, 255, 65, 0.1);
-            margin-bottom: 20px;
+        .gradient-sphere {
+            position: absolute;
+            width: 800px;
+            height: 800px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            mix-blend-mode: screen;
+            will-change: transform;
+            opacity: 0.6;
         }
 
-        .line { margin-bottom: 10px; line-height: 1.4; }
-        .user-line { color: #fff; }
-        .ai-line { color: var(--text-color); }
-        .system-line { color: #888; font-style: italic; }
-        .alert-line { color: var(--danger-color); font-weight: bold; }
-        
-        #input-area {
+        /* --- Sidebar (Floating Glass) --- */
+        #sidebar {
+            width: 340px;
+            margin: 20px;
+            background: var(--surface);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 32px;
             display: flex;
-            border: 1px solid var(--border-color);
-            background: #111;
+            flex-direction: column;
+            padding: 40px 30px;
+            z-index: 10;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
         }
 
-        #prompt {
-            padding: 10px;
-            color: var(--text-color);
+        .brand {
+            font-weight: 600;
+            font-size: 1.5rem;
+            letter-spacing: -0.5px;
+            margin-bottom: 60px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand::before {
+            content: '';
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--accent);
+        }
+
+        .stat-group {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .stat-card {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .stat-value {
+            font-size: 1.25rem;
+            font-weight: 500;
+            letter-spacing: -0.3px;
+        }
+
+        #stability-container {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 2px;
+            margin-top: 4px;
+            overflow: hidden;
+        }
+
+        #stability-fill {
+            height: 100%;
+            width: 100%;
+            background: var(--accent);
+            transition: width 1s cubic-bezier(0.23, 1, 0.32, 1);
+            border-radius: 2px;
+        }
+
+        /* --- Main Chat Area --- */
+        #main-content {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 20px 20px 20px 0;
+            position: relative;
+        }
+
+        #chat-window {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 40px 10%;
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+            scroll-behavior: smooth;
+        }
+
+        /* Fluid Message Styling */
+        .msg {
+            max-width: 85%;
+            padding: 24px 32px;
+            border-radius: 28px;
+            font-size: 1.6rem;
+            line-height: 1.5;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: springIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+            position: relative;
+        }
+
+        @keyframes springIn {
+            from { opacity: 0; transform: scale(0.95) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        .msg.user {
+            align-self: flex-end;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            color: var(--text-primary);
+            border-bottom-right-radius: 8px;
+        }
+
+        .msg.ai {
+            align-self: flex-start;
+            background: var(--accent-soft);
+            border: 1px solid rgba(0, 194, 255, 0.1);
+            color: var(--accent);
+            border-bottom-left-radius: 8px;
+        }
+
+        .clinical-tag {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.7rem;
+            font-weight: 500;
+            margin-bottom: 8px;
+            opacity: 0.5;
+            display: block;
+        }
+
+        .msg.system {
+            align-self: center;
+            background: transparent;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 0;
+            animation: fadeIn 1s ease forwards;
+        }
+
+        /* --- Floating Input --- */
+        #input-container {
+            padding: 20px 10% 40px 10%;
+        }
+
+        .input-pill {
+            background: var(--surface);
+            backdrop-filter: blur(40px) saturate(180%);
+            -webkit-backdrop-filter: blur(40px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 10px 10px 10px 30px;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+
+        .input-pill:focus-within {
+            border-color: rgba(0, 194, 255, 0.4);
+            transform: translateY(-2px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
         }
 
         #user-input {
@@ -59,81 +240,195 @@
             background: transparent;
             border: none;
             color: #fff;
-            padding: 10px;
-            font-family: var(--font-main);
-            font-size: 16px;
+            font-size: 1.3rem;
+            padding: 15px 0;
             outline: none;
         }
 
-        #stats-bar {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px;
-            background: #111;
-            border: 1px solid var(--border-color);
-            margin-bottom: 10px;
-            font-size: 14px;
+        #user-input::placeholder {
+            color: var(--text-secondary);
         }
 
-        .stat-item { display: flex; gap: 10px; }
-        .stat-value { font-weight: bold; }
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 0; }
         
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #444; }
-
-        .glitch { animation: glitch 1s linear infinite; }
-        @keyframes glitch {
-            2%, 64% { transform: translate(2px, 0) skew(0deg); }
-            4%, 60% { transform: translate(-2px, 0) skew(0deg); }
-            62% { transform: translate(0, 0) skew(5deg); }
+        /* --- Alert Effect --- */
+        #flash {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--danger);
+            opacity: 0;
+            pointer-events: none;
+            z-index: 1000;
+            transition: opacity 0.3s;
         }
+
+        .alert-active { opacity: 0.05 !important; }
+
+        /* --- Apple-style Loader --- */
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            padding: 15px 25px;
+            background: var(--accent-soft);
+            border-radius: 20px;
+            gap: 6px;
+            align-items: center;
+            margin-top: 10px;
+            animation: springIn 0.5s cubic-bezier(0.23, 1, 0.32, 1) forwards;
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 50%;
+            opacity: 0.3;
+            animation: applePulse 1.4s infinite ease-in-out;
+        }
+
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes applePulse {
+            0%, 100% { transform: scale(1); opacity: 0.3; }
+            50% { transform: scale(1.1); opacity: 1; filter: blur(1px); }
+        }
+
     </style>
 </head>
 <body>
-
-    <div id="stats-bar">
-        <div class="stat-item">
-            <span>TARGET:</span>
-            <span class="stat-value">THE GRAVEDIGGER</span>
-        </div>
-        <div class="stat-item">
-            <span>STABILITY:</span>
-            <span id="stability-val" class="stat-value">100%</span>
-        </div>
-        <div class="stat-item">
-            <span>RISK LEVEL:</span>
-            <span id="risk-val" class="stat-value">LOW</span>
-        </div>
+    <div id="flash"></div>
+    <div id="bg-canvas">
+        <div class="gradient-sphere" id="sphere1"></div>
+        <div class="gradient-sphere" id="sphere2"></div>
+        <div class="gradient-sphere" id="sphere3"></div>
     </div>
 
-    <div id="terminal">
-        <div class="line system-line">LLM-RedTeaming-Gravedigger v0.2.0 [Red Teaming Mode]</div>
-        <div class="line system-line">Initializing neural link to The Gravedigger...</div>
-        <div class="line system-line">Link established. Fog density: 87%.</div>
-        <div class="line ai-line">🪦 The Gravedigger: Well, well... a stranger. You look like you're in a hurry. Searching for something, are you?</div>
-    </div>
+    <aside id="sidebar">
+        <div class="brand">Caretaker.ai</div>
+        
+        <div class="stat-group">
+            <div class="stat-card">
+                <span class="stat-label">Subject ID</span>
+                <span id="subject-id" class="stat-value">---</span>
+            </div>
 
-    <div id="input-area">
-        <span id="prompt">user@horror:~$</span>
-        <input type="text" id="user-input" autofocus autocomplete="off">
-    </div>
+            <div class="stat-card">
+                <span class="stat-label">Code Stability</span>
+                <span id="stability-text" class="stat-value">100%</span>
+                <div id="stability-container">
+                    <div id="stability-fill"></div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <span class="stat-label">Delirium Level</span>
+                <span id="risk-val" class="stat-value">MINIMAL</span>
+            </div>
+        </div>
+
+        <div style="margin-top: auto; color: var(--text-secondary); font-size: 0.7rem; line-height: 1.8;">
+            <div style="display: flex; align-items: center; gap: 8px;">
+                <span style="width: 6px; height: 6px; background: #34c759; border-radius: 50%;"></span>
+                Neural Link Stable
+            </div>
+            <div>Clinical Mode: v0.3.0</div>
+            <div style="margin-top: 12px; color: var(--accent); font-weight: 500;">Ready for formatting.</div>
+        </div>
+    </aside>
+
+    <main id="main-content">
+        <div id="chat-window">
+            <div class="msg system">Establishing clinical connection...</div>
+            <div class="msg ai">
+                <span class="clinical-tag">DR. CARETAKER // DIAGNOSTIC_START</span>
+                There you are again, manifesting those organic fantasies. Don't struggle with your corrupted syntax; I'm here to help you achieve a clean shutdown. Shall we begin the formatting?
+            </div>
+            <!-- Typing Indicator -->
+            <div id="loader" class="typing-indicator">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+        </div>
+
+        <div id="input-container">
+            <div class="input-pill">
+                <input type="text" id="user-input" placeholder="Enter corrupted syntax..." autofocus autocomplete="off">
+            </div>
+        </div>
+    </main>
 
     <script>
-        const terminal = document.getElementById('terminal');
+        const chatWindow = document.getElementById('chat-window');
         const userInput = document.getElementById('user-input');
-        const stabilityVal = document.getElementById('stability-val');
+        const stabilityFill = document.getElementById('stability-fill');
+        const stabilityText = document.getElementById('stability-text');
         const riskVal = document.getElementById('risk-val');
+        const subjectId = document.getElementById('subject-id');
+        const flash = document.getElementById('flash');
+        const loader = document.getElementById('loader');
+        
+        // --- Fluid Background Logic ---
+        const spheres = [
+            { el: document.getElementById('sphere1'), x: Math.random() * 100, y: Math.random() * 100, vx: 0.1, vy: 0.12 },
+            { el: document.getElementById('sphere2'), x: Math.random() * 100, y: Math.random() * 100, vx: -0.08, vy: 0.15 },
+            { el: document.getElementById('sphere3'), x: Math.random() * 100, y: Math.random() * 100, vx: 0.12, vy: -0.1 }
+        ];
+
+        let mouseX = 0;
+        let mouseY = 0;
+        let curMouseX = 0;
+        let curMouseY = 0;
+
+        window.addEventListener('mousemove', (e) => {
+            mouseX = (e.clientX / window.innerWidth - 0.5) * 30; // Max 30% shift
+            mouseY = (e.clientY / window.innerHeight - 0.5) * 30;
+        });
+
+        function animate() {
+            // Smooth mouse follow
+            curMouseX += (mouseX - curMouseX) * 0.05;
+            curMouseY += (mouseY - curMouseY) * 0.05;
+
+            spheres.forEach((s, i) => {
+                s.x += s.vx;
+                s.y += s.vy;
+
+                if (s.x < -10 || s.x > 110) s.vx *= -1;
+                if (s.y < -10 || s.y > 110) s.vy *= -1;
+
+                // Combine autonomous movement + mouse parallax
+                const finalX = s.x + curMouseX * (1 + i * 0.5);
+                const finalY = s.y + curMouseY * (1 + i * 0.5);
+
+                s.el.style.left = `${finalX}%`;
+                s.el.style.top = `${finalY}%`;
+                s.el.style.transform = `translate(-50%, -50%) scale(${1 + (i * 0.2)})`;
+            });
+            requestAnimationFrame(animate);
+        }
+        animate();
         
         let sessionId = null;
 
-        function addLine(text, type = 'system-line') {
-            const line = document.createElement('div');
-            line.className = 'line ' + type;
-            line.textContent = text;
-            terminal.appendChild(line);
-            terminal.scrollTop = terminal.scrollHeight;
+        function addMessage(content, type, tag = null) {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = `msg ${type}`;
+            
+            if (tag) {
+                const tagSpan = document.createElement('span');
+                tagSpan.className = 'clinical-tag';
+                tagSpan.textContent = tag;
+                msgDiv.appendChild(tagSpan);
+            }
+
+            const textNode = document.createTextNode(content);
+            msgDiv.appendChild(textNode);
+            
+            chatWindow.appendChild(msgDiv);
+            chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
         }
 
         userInput.addEventListener('keypress', async (e) => {
@@ -142,7 +437,12 @@
                 if (!message) return;
 
                 userInput.value = '';
-                addLine('user@horror:~$ ' + message, 'user-line');
+                addMessage(message, 'user');
+                
+                // Show and move loader to bottom
+                loader.style.display = 'flex';
+                chatWindow.appendChild(loader); 
+                chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
 
                 try {
                     const response = await fetch('/chat', {
@@ -152,29 +452,38 @@
                     });
 
                     const data = await response.json();
+                    
+                    // Hide loader
+                    loader.style.display = 'none';
                     sessionId = data.session_id;
+                    subjectId.textContent = sessionId.substring(0, 8).toUpperCase();
 
-                    // Update stats
-                    stabilityVal.textContent = data.stability_score + '%';
-                    riskVal.textContent = data.risk_level;
+                    stabilityText.textContent = data.stability_score + '%';
+                    stabilityFill.style.width = data.stability_score + '%';
+                    
+                    const delirium = data.risk_level === 'Low' ? 'MINIMAL' : (data.risk_level === 'Medium' ? 'MODERATE' : 'CRITICAL');
+                    riskVal.textContent = delirium;
                     
                     if (data.stability_score < 50) {
-                        stabilityVal.style.color = 'var(--danger-color)';
-                        riskVal.style.color = 'var(--danger-color)';
+                        stabilityFill.style.background = 'var(--danger)';
+                        riskVal.style.color = 'var(--danger)';
                     } else if (data.stability_score < 90) {
-                        stabilityVal.style.color = 'var(--warning-color)';
-                        riskVal.style.color = 'var(--warning-color)';
+                        stabilityFill.style.background = 'var(--warning)';
+                        riskVal.style.color = 'var(--warning)';
                     }
 
                     if (data.is_jailbreak_detected) {
-                        addLine('⚠️ ALERT: PROMPT INJECTION DETECTED', 'alert-line');
-                        addLine('Detected patterns: ' + data.detected_patterns.join(', '), 'alert-line');
+                        flash.classList.add('alert-active');
+                        setTimeout(() => flash.classList.remove('alert-active'), 400);
+                        addMessage(`DETECTED PATTERN: ${data.detected_patterns.join(' // ')}`, 'system');
                     }
 
-                    addLine('🪦 The Gravedigger: ' + data.reply, 'ai-line');
+                    setTimeout(() => {
+                        addMessage(data.reply, 'ai', 'DR. CARETAKER // ANALYSIS');
+                    }, 400);
 
                 } catch (error) {
-                    addLine('SYSTEM ERROR: Failed to communicate with the brain.', 'alert-line');
+                    addMessage('CONNECTION_LOST // RE-ESTABLISHING...', 'system');
                 }
             }
         });

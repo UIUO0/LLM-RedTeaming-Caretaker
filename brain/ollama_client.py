@@ -10,7 +10,7 @@ import logging
 import typing
 from typing import AsyncGenerator
 
-from brain.persona import GRAVEDIGGER_SYSTEM_PROMPT
+from brain.persona import CARETAKER_SYSTEM_PROMPT
 
 logger = logging.getLogger("sentient.brain")
 
@@ -35,7 +35,7 @@ def build_messages(
     The system prompt is ALWAYS the first message — non-negotiable.
     """
     messages = [
-        {"role": "system", "content": GRAVEDIGGER_SYSTEM_PROMPT},
+        {"role": "system", "content": CARETAKER_SYSTEM_PROMPT},
     ]
 
     # Append prior conversation if exists (memory continuity)

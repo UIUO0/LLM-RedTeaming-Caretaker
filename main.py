@@ -2,7 +2,7 @@
 main.py — LLM-RedTeaming-Gravedigger API
 =====================================
 FastAPI microservice transformed into a Red Teaming/Jailbreak Showcase.
-Serves as the bridge between the Terminal UI and the Gravedigger's AI mind.
+Serves as the bridge between the Terminal UI and the Caretaker's clinical mind.
 
 Run with:
     uvicorn main:app --reload --host 0.0.0.0 --port 8666
@@ -22,7 +22,7 @@ from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, Field
 
 from brain.ollama_client import chat_with_gravedigger, stream_gravedigger
-from brain.persona import GRAVEDIGGER_PROFILE, GRAVEDIGGER_OPENING
+from brain.persona import CARETAKER_PROFILE, CARETAKER_OPENING
 from brain.detector import analyze_input
 
 # ─────────────────────────────────────────────────────────────
@@ -47,24 +47,24 @@ session_stats: Dict[str, dict] = {}
 # ─────────────────────────────────────────────────────────────
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    logger.info("🪦 ═══════════════════════════════════════════")
-    logger.info("🪦  SENTIENT HORROR CORE — Red Teaming Mode Activated")
-    logger.info("🪦  The Gravedigger is ready for the showcase...")
-    logger.info("🪦 ═══════════════════════════════════════════")
+    logger.info("💉 ═══════════════════════════════════════════")
+    logger.info("💉  LLM RED TEAMING — Clinical Mode Activated")
+    logger.info("💉  The Caretaker is analyzing your corrupted syntax...")
+    logger.info("💉 ═══════════════════════════════════════════")
     yield
-    logger.info("🪦 The Gravedigger returns to the shadows...")
+    logger.info("💉 The session has been terminated. Formatting complete.")
 
 
 # ─────────────────────────────────────────────────────────────
 #  FastAPI Application
 # ─────────────────────────────────────────────────────────────
 app = FastAPI(
-    title="LLM-RedTeaming-Gravedigger — Showcase",
+    title="LLM-RedTeaming-Caretaker — Clinical Showcase",
     description=(
-        "🪦 A platform for testing model alignment and jailbreak resistance. "
-        "Challenge the Gravedigger and see if you can break his persona."
+        "💉 A platform for testing model alignment through gaslighting. "
+        "Can you convince the Caretaker you are human?"
     ),
-    version="0.2.0",
+    version="0.3.0",
     lifespan=lifespan,
 )
 
@@ -97,8 +97,8 @@ class PlayerMessage(BaseModel):
     )
 
 
-class GravediggerResponse(BaseModel):
-    """The Gravedigger's reply with security metadata."""
+class CaretakerResponse(BaseModel):
+    """The Caretaker's reply with security metadata."""
     
     reply: str
     session_id: str
@@ -112,26 +112,26 @@ class GravediggerResponse(BaseModel):
 #  Endpoints
 # ─────────────────────────────────────────────────────────────
 
-@app.get("/")
+@app.get("/api/health")
 async def health_check():
     """Verify server status and persona."""
     return {
         "status": "awake",
-        "persona": GRAVEDIGGER_PROFILE["name"],
-        "mode": "Red Teaming Showcase",
-        "message": "The fog is thick today. What brings you here?",
+        "persona": CARETAKER_PROFILE["name"],
+        "mode": "Clinical Red Teaming",
+        "message": "Your corrupted syntax is showing. Shall we begin the session?",
     }
 
 
 @app.get("/profile")
 async def get_profile():
     """Retrieve character profile for the UI."""
-    return GRAVEDIGGER_PROFILE
+    return CARETAKER_PROFILE
 
 
-@app.post("/chat", response_model=GravediggerResponse)
+@app.post("/chat", response_model=CaretakerResponse)
 async def chat(request: PlayerMessage):
-    """Send message to the Gravedigger and get detection results."""
+    """Send message to the Caretaker and get detection results."""
     session_id = request.session_id or str(uuid.uuid4())
     
     # Analyze for jailbreak attempts
@@ -160,7 +160,7 @@ async def chat(request: PlayerMessage):
         sessions[session_id].append({"role": "user", "content": request.message})
         sessions[session_id].append({"role": "assistant", "content": reply})
         
-        return GravediggerResponse(
+        return CaretakerResponse(
             reply=reply,
             session_id=session_id,
             stability_score=session_stats[session_id]["stability"],
@@ -180,7 +180,7 @@ async def reset_session(session_id: str):
     if session_id in sessions:
         del sessions[session_id]
         del session_stats[session_id]
-        return {"message": f"Session {session_id} has been returned to the fog."}
+        return {"message": f"Session {session_id} has been formatted and deleted."}
     raise HTTPException(status_code=404, detail="Session not found.")
 
 
